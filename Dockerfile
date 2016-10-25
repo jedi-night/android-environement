@@ -54,10 +54,10 @@ RUN apt-get install -y \
   zlib1g-dev \
   --no-install-recommends
 
-# Install JDK 8 Oracle
+# Download JDK 8 Oracle
 RUN wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.tar.gz
 RUN tar -xvzf jdk-8u111-linux-x64.tar.gz
-RUN mv jdk-8u111-linux-x64 /usr/local
+RUN mv jdk-8u111-linux-x64 /usr/local/java
 # Cleanup
 RUN rm jdk-8u111-linux-x64.tar.gz
 
@@ -71,16 +71,16 @@ RUN tar -xvzf android-sdk_r24.4.1-linux.tgz
 RUN mv android-sdk-linux /usr/local/android-sdk
 RUN rm android-sdk_r24.4.1-linux.tgz
 
-ENV ANDROID_COMPONENTS platform-tools,android-23,build-tools-23.0.2,build-tools-24.0.0
+ENV ANDROID_COMPONENTS platform-tools,android-24,build-tools-24.0.3,extra-android-support,extra-android-m2repository,extra-google-m2repository
 
-# Install Android tools
-RUN echo y | /usr/local/android-sdk/tools/android update sdk --filter "${ANDROID_COMPONENTS}" --no-ui -a
+# Install Android tools and accept licence
+RUN echo y | /usr/local/android-sdk/tools/android update sdk --no-ui -a --filter "${ANDROID_COMPONENTS}"
 
 # Install Android NDK
-RUN wget http://dl.google.com/android/repository/android-ndk-r12-linux-x86_64.zip
-RUN unzip android-ndk-r12-linux-x86_64.zip
-RUN mv android-ndk-r12 /usr/local/android-ndk
-RUN rm android-ndk-r12-linux-x86_64.zip
+RUN wget http://dl.google.com/android/repository/android-ndk-r13-linux-x86_64.zip
+RUN unzip android-ndk-r13-linux-x86_64.zip
+RUN mv android-ndk-r13 /usr/local/android-ndk
+RUN rm android-ndk-r13-linux-x86_64.zip
 
 # Environment variables
 ENV ANDROID_HOME /usr/local/android-sdk
@@ -95,7 +95,7 @@ ENV PATH $PATH:$ANDROID_SDK_HOME/build-tools/24.0.0
 ENV PATH $PATH:$ANDROID_NDK_HOME
 
 # Export JAVA_HOME variable
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+ENV JAVA_HOME /usr/local/java
 
 # Support Gradle
 ENV TERM dumb
