@@ -54,10 +54,12 @@ RUN apt-get install -y \
   zlib1g-dev \
   --no-install-recommends
 
-# Install Java
-RUN apt-add-repository ppa:openjdk-r/ppa
-RUN apt-get update
-RUN apt-get -y install openjdk-8-jdk
+# Install JDK 8 Oracle
+RUN wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.tar.gz
+RUN tar -xvzf jdk-8u111-linux-x64.tar.gz
+RUN mv jdk-8u111-linux-x64 /usr/local
+# Cleanup
+RUN rm jdk-8u111-linux-x64.tar.gz
 
 # Clean Up Apt-get
 RUN rm -rf /var/lib/apt/lists/*
