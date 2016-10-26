@@ -64,7 +64,7 @@ RUN mv jdk1.8.0_112 /usr/local/java
 ENV JAVA_HOME /usr/local/java
 
 # Cleanup JDK 8 tar.gz
-RUN rm jdk-8u111-linux-x64.tar.gz
+RUN rm jdk-8u112-linux-x64.tar.gz
 
 # Clean Up Apt-get
 RUN rm -rf /var/lib/apt/lists/*
