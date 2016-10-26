@@ -62,6 +62,7 @@ RUN mv jdk1.8.0_112 /usr/local/java
 
 # Export JAVA_HOME variable
 ENV JAVA_HOME /usr/local/java
+ENV PATH $PATH:$JAVA_HOME/bin
 
 # Cleanup JDK 8 tar.gz
 RUN rm jdk-8u112-linux-x64.tar.gz
