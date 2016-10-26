@@ -54,10 +54,11 @@ RUN apt-get install -y \
   --no-install-recommends
 
 # Download JDK 8 Oracle
-RUN wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.tar.gz
-RUN tar -xvzf jdk-8u111-linux-x64.tar.gz
+#RUN wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.tar.gz
+RUN wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.tar.gz
+RUN tar -xvzf jdk-8u102-linux-x64.tar.gz
 # Install JDK 8 Oracle
-RUN mv jdk-8u111-linux-x64 /usr/local/java
+RUN mv jdk-8u102-linux-x64 /usr/local/java
 
 # Export JAVA_HOME variable
 ENV JAVA_HOME /usr/local/java
