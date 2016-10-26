@@ -57,26 +57,32 @@ RUN apt-get install -y \
 # Download JDK 8 Oracle
 RUN wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.tar.gz
 RUN tar -xvzf jdk-8u111-linux-x64.tar.gz
+# Install JDK 8 Oracle
 RUN mv jdk-8u111-linux-x64 /usr/local/java
-# Cleanup
+
+# Export JAVA_HOME variable
+ENV JAVA_HOME /usr/local/java
+
+# Cleanup JDK 8 tar.gz
 RUN rm jdk-8u111-linux-x64.tar.gz
 
 # Clean Up Apt-get
 RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get clean
 
-# Install Android SDK
+# Install Android SDK 24
 RUN wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
 RUN tar -xvzf android-sdk_r24.4.1-linux.tgz
 RUN mv android-sdk-linux /usr/local/android-sdk
 RUN rm android-sdk_r24.4.1-linux.tgz
 
-ENV ANDROID_COMPONENTS platform-tools,android-24,build-tools-24.0.3,extra-android-support,extra-android-m2repository,extra-google-m2repository
+# Prepare components Android to version 25
+ENV ANDROID_COMPONENTS platform-tools-25.0.0,android-25,build-tools-25.0.0,extra-android-support,extra-android-m2repository,extra-google-m2repository
 
-# Install Android tools and accept licence
+# Update Android componentes and accept licence
 RUN echo y | /usr/local/android-sdk/tools/android update sdk --no-ui -a --filter "${ANDROID_COMPONENTS}"
 
-# Install Android NDK
+# Install Android NDK r13
 RUN wget http://dl.google.com/android/repository/android-ndk-r13-linux-x86_64.zip
 RUN unzip android-ndk-r13-linux-x86_64.zip
 RUN mv android-ndk-r13 /usr/local/android-ndk
@@ -90,12 +96,8 @@ ENV JENKINS_HOME $HOME
 ENV PATH ${INFER_HOME}/bin:${PATH}
 ENV PATH $PATH:$ANDROID_SDK_HOME/tools
 ENV PATH $PATH:$ANDROID_SDK_HOME/platform-tools
-ENV PATH $PATH:$ANDROID_SDK_HOME/build-tools/23.0.2
-ENV PATH $PATH:$ANDROID_SDK_HOME/build-tools/24.0.0
+ENV PATH $PATH:$ANDROID_SDK_HOME/build-tools/25.0.0
 ENV PATH $PATH:$ANDROID_NDK_HOME
-
-# Export JAVA_HOME variable
-ENV JAVA_HOME /usr/local/java
 
 # Support Gradle
 ENV TERM dumb
