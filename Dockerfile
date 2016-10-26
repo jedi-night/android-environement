@@ -56,7 +56,7 @@ RUN apt-get install -y \
 # Download JDK 8 Oracle
 #RUN wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.tar.gz
 RUN wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz
-RUN tar -xvzf jdk-8u112-linux-x64
+RUN tar -xvzf jdk-8u112-linux-x64.tar.gz
 # Install JDK 8 Oracle
 RUN mv jdk1.8.0_112 /usr/local/java
 
